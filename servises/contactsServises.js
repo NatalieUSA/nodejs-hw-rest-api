@@ -4,19 +4,19 @@ const crypto = require('crypto');
 const path = require('path');
 const contactsPath = path.join(__dirname, 'contacts.json');
 
-const listContacts = async () => {
+const listContactsService = async () => {
   const contacts = await fs.readFile(contactsPath);
   return JSON.parse(contacts);
 };
 
-const getContactById = async contactId => {
-  const contacts = await listContacts();
+const getContactByIdService = async contactId => {
+  const contacts = await listContactsService();
   const contact = contacts.find(contact => contact.id === contactId);
   return contact || null;
 };
 
-const removeContact = async contactId => {
-  const contacts = await listContacts();
+const removeContactService = async contactId => {
+  const contacts = await listContactsService();
   const index = contacts.findIndex(contact => contact.id === contactId);
   if (index === -1) {
     return null;
@@ -28,8 +28,8 @@ const removeContact = async contactId => {
   return contactId;
 };
 
-const addContact = async body => {
-  const contacts = await listContacts();
+const addContactService = async body => {
+  const contacts = await listContactsService();
   const newContact = {
     id: crypto.randomUUID(),
     ...body,
@@ -40,8 +40,8 @@ const addContact = async body => {
   return newContact;
 };
 
-const updateContact = async (contactId, body) => {
-  const contacts = await listContacts();
+const updateContactService = async (contactId, body) => {
+  const contacts = await listContactsService();
   const index = contacts.findIndex(contact => contact.id === contactId);
 
   if (index === -1) {
@@ -57,9 +57,9 @@ const updateContact = async (contactId, body) => {
 };
 
 module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
+  listContactsService,
+  getContactByIdService,
+  removeContactService,
+  addContactService,
+  updateContactService,
 };
