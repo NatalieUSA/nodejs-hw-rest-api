@@ -21,10 +21,10 @@ const removeContact = async contactId => {
   if (index === -1) {
     return null;
   }
-  // const [result] = contacts.splice(index, 1);
+
   contacts.splice(index, 1);
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
-  // return result;
+
   return contactId;
 };
 
@@ -34,9 +34,9 @@ const addContact = async body => {
     id: crypto.randomUUID(),
     ...body,
   };
-  contacts.push(newContact);
-  // const updatedContacts = [newContact, ...contacts];
-  await fs.writeFile(contactsPath, JSON.stringify(body, null, 2));
+
+  const updatedContacts = [newContact, ...contacts];
+  await fs.writeFile(contactsPath, JSON.stringify(updatedContacts, null, 2));
   return newContact;
 };
 
@@ -48,7 +48,10 @@ const updateContact = async (contactId, body) => {
     return null;
   }
 
-  contacts[index] = { contactId, ...body };
+  contacts[index] = {
+    id: contactId,
+    ...body,
+  };
   await fs.writeFile(contactsPath, JSON.stringify(contacts, null, 2));
   return contacts[index];
 };
