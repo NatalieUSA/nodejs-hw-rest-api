@@ -4,7 +4,6 @@ const Joi = require('joi');
 const regexEmail = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
 
 const regiserSchemaUser = Joi.object({
-  //   name: Joi.string().min(3).required(),
   password: Joi.string().min(6).required(),
   email: Joi.string().pattern(regexEmail).required(),
   subscription: Joi.string(),
@@ -12,7 +11,6 @@ const regiserSchemaUser = Joi.object({
 });
 
 const loginSchemaUser = Joi.object({
-  //   name: Joi.string().min(3).required(),
   password: Joi.string().min(6).required(),
   email: Joi.string().pattern(regexEmail).required(),
 });
@@ -39,6 +37,9 @@ const usersSchema = new Schema(
     token: {
       type: String,
       default: null,
+    },
+    avatarURL: {
+      type: String,
     },
   },
   { versionKey: false, timestamp: true }

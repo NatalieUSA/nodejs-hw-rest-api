@@ -1,5 +1,5 @@
 const express = require('express');
-const { validateBody, autenticate } = require('../../middlewares');
+const { validateBody, auth, upload } = require('../../middlewares');
 const { schemasJoi } = require('../../models/user');
 
 const {
@@ -7,13 +7,15 @@ const {
   login,
   getCurrent,
   logout,
+  updateAvatar,
 } = require('../../controllers/users');
 
 const router = express.Router();
 
 router.post('/register', validateBody(schemasJoi.regiserSchemaUser), register);
 router.post('/login', validateBody(schemasJoi.loginSchemaUser), login);
-router.get('/current', autenticate, getCurrent);
-router.post('/logout', autenticate, logout);
+router.get('/current', auth, getCurrent);
+router.post('/logout', auth, logout);
+router.patch('/avatars', auth, upload.single('avatar'), updateAvatar);
 
 module.exports = router;
