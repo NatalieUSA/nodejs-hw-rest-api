@@ -8,11 +8,15 @@ const {
   getCurrent,
   logout,
   updateAvatar,
+  verifyEmail,
+  resendVerifyEmail,
 } = require('../../controllers/users');
 
 const router = express.Router();
 
 router.post('/register', validateBody(schemasJoi.regiserSchemaUser), register);
+router.get('/verify/:verificationToken', verifyEmail);
+router.post('/verify', resendVerifyEmail);
 router.post('/login', validateBody(schemasJoi.loginSchemaUser), login);
 router.get('/current', auth, getCurrent);
 router.post('/logout', auth, logout);
